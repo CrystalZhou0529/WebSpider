@@ -1,0 +1,20 @@
+import requests
+
+#cookie=[copy cookies from douban.com]
+
+def coo_regular(cookie):
+    coo={}
+    for k_v in cookie.split(';'):
+        k,v = k_v.split('=', 1)
+        coo[k.strip()]=v.replace('"','')
+    return coo
+
+cookies=coo_regular(cookie)
+url='https://www.cnblogs.com/yangwu-183/p/10042755.html'
+hv={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+
+try:
+    r=requests.get(url,headers=hc,cookies=cookies)
+    r.encoding='utf-8'
+except:
+    print('False!')
