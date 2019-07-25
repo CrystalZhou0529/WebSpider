@@ -1,0 +1,18 @@
+import pymongo
+from pymongo import MongoClient
+client=MongoClient('localhost',27017)
+
+
+class DemoPipeline(object):
+    collection='demo'
+    
+    def open_spider(self, spider):
+        self.client=MongoClient('localhost', 27017)
+        self.db=self.client['demo_collection']
+    
+    def close_spider(self, spider):
+        self.client.close()
+        
+    def process_item(self, item, spider):
+        table=self.db[self.collection]
+        table.insert_one(dict(item))
