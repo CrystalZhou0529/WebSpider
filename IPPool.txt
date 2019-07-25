@@ -1,0 +1,27 @@
+settings.py:
+DOWNLOADER_MIDDLEWARES = {
+    'demo.middlewares.MyProxiesSpiderMiddleware':100,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': None,
+}
+
+IPPOOL =[
+        {'ipaddr':'http://222.189.190.95:9999'},
+        {'ipaddr':'http://123.169.34.249:9999'},
+        {'ipaddr':'http://120.83.99.81:9999'},
+        {'ipaddr':'http://218.66.253.144:8800'},
+        {'ipaddr':'http://121.233.227.32:9999'},
+        {'ipaddr':'http://58.253.156.164:9999'},
+        {'ipaddr':'http://183.129.207.86:11206'}
+        ]
+
+
+
+middlewares.py:
+
+from scrapy.contrib.downloadermiddleware.httpproxy import HttpProxyMiddleware
+from demo.settings import IPPOOL
+
+class MyProxiesSpiderMiddleware(HttpProxyMiddleware):
+    def process_request(self, request, spider):
+        thisip=random.choice(IPPOOL)
+        request.meta['proxy']=thisip['ipaddr']
